@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <!-- Styles for the calculator -->
+    <style> 
+        .calculator {
+            margin: 0 auto;
+            width: 300px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .calculator input[type="text"] {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator button {
+            display: block;
+            margin: 0 auto;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator button:hover {
+            background-color: #3e8e41;
+        }
+
+        .calculator p#result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .buttons {
+             display: flex;
+            flex-wrap: wrap;
+            align-items: space-evenly;
+        }
+    </style>
+</head>
+<body>
+<div class="calculator">
+    <h1>Calculator</h1>
+    <input id="num1" type="text" placeholder="Enter first number">
+    <input id="num2" type="text" placeholder="Enter second number">
+    <!-- Buttons for operations -->
+    <div class="buttons"> 
+        <button onclick="add()">Add</button>
+        <button onclick="subtract()">Subtract</button>
+        <button onclick="multiply()">Multiply</button>
+        <button onclick="divide()">Divide</button>
+    </div>
+    <!-- Get Result here -->
+    <p id="result"></p>
+     <!--Get Error Here  -->
+    <p id="error" style="color: red"></p>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script> -->
+    <script>
+      const API_URL = 'http://localhost:3000';
+      // const token = localStorage.getItem('token');
+
+      // axios.get(`${API_URL}/protected`, { headers: { Authorization: `Bearer ${token}` } })
+      //   .then(response => {
+      //     const user = response.data.user;
+      //     const message = `Welcome, ${user.username}!`;
+      //     const messageElement = document.createElement('p');
+      //     messageElement.textContent = message;
+      //     document.body.appendChild(messageElement);
+      //   })
+      //   .catch(error => {
+      //     alert('Access denied!');
+      //     window.location.href = '/login.html';
+      //   });
+
+      function add() { //method used for add 
+        const num1 = parseFloat(document.getElementById('num1').value);
+        const num2 = parseFloat(document.getElementById('num2').value);
+        document.getElementById('error').textContent = "";
+        document.getElementById('result').textContent="";
+        fetch('http://localhost:3000/add', { // api for additon endpoint
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ num1, num2 })
+        })
+        .then(response =>  response.json())
+        .then(data => {
+           if(data.result == undefined){ 
+                document.getElementById('error').textContent = `ERROR: ${data.error}`;
+            }
+            else{
+          document.getElementById('result').textContent = `Result: ${data.result}`;
+                }
+            })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+      function multiply() { //method used for multiplication  
+        const num1 = parseFloat(document.getElementById('num1').value);
+        const num2 = parseFloat(document.getElementById('num2').value);
+        document.getElementById('error').textContent = "";
+        document.getElementById('result').textContent="";
+        fetch('http://localhost:3000/multiply', { // api for multiplication endpoint
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ num1, num2 })
+        })
+        .then(response => response.json())
+        .then(data => {
+           if(data.result == undefined){ 
+                document.getElementById('error').textContent = `ERROR: ${data.error}`;
+            }
+            else{
+          document.getElementById('result').textContent = `Result: ${data.result}`;
+                }
+            })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+      function subtract() { //method used for subtraction 
+        const num1 = parseFloat(document.getElementById('num1').value);
+        const num2 = parseFloat(document.getElementById('num2').value);
+        document.getElementById('error').textContent = "";
+        document.getElementById('result').textContent="";
+        fetch('http://localhost:3000/subtract', { // api for subtraction endpoint
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ num1, num2 })
+        })
+        .then(response => response.json())
+        .then(data => {
+           if(data.result == undefined){ 
+                document.getElementById('error').textContent = `ERROR: ${data.error}`;
+            }
+            else{
+          document.getElementById('result').textContent = `Result: ${data.result}`;
+                }
+            })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+      function divide() { //method used for division 
+        const num1 = parseFloat(document.getElementById('num1').value);
+        const num2 = parseFloat(document.getElementById('num2').value);
+        document.getElementById('error').textContent = "";
+        document.getElementById('result').textContent="";
+       fetch('http://localhost:3000/divide', { // api for division endpoint
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ num1, num2 })
+        })
+        .then(response => response.json())
+        .then(data => {
+           if(data.result == undefined){ 
+                document.getElementById('error').textContent = `ERROR: ${data.error}`;
+            }
+            else{
+          document.getElementById('result').textContent = `Result: ${data.result}`;
+                 }
+            })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+    </script>
+  </body>
+</html>

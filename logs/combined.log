@@ -1,0 +1,2 @@
+{"level":"info","message":"New add operation requested: 12 + null","service":"calculator-microservice"}
+{"level":"info","message":"New add operation requested: 12 + 3","service":"calculator-microservice"}
